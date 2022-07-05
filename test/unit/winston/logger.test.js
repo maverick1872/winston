@@ -801,17 +801,6 @@ describe('Logger Instance', function () {
         logger.info(null);
       });
 
-      it('.info(new Error()) uses Error instance as info', function (done) {
-        const err = new Error('test');
-        const logger = helpers.createLogger(function (info) {
-          assume(info).instanceOf(Error);
-          assume(info).equals(err);
-          done();
-        });
-
-        logger.info(err);
-      });
-
       it(`.info('any string', new Error())`, function () {
         console.log(`The current result of this log statement results in the error message being concatenated with \
 the log message provided.\nThis behavior needs to be verified if it's intentional IMO`)
@@ -826,6 +815,72 @@ the log message provided.\nThis behavior needs to be verified if it's intentiona
         assume(levelOutput[0].level).eqls("info");
         assume(levelOutput[0].message).eqls("test message! test");
         assume(levelOutput[0].stack).exists("stack trace must exist");
+      });
+
+      describe('Error objects', function () {
+        class SuperError extends Error {
+          constructor() {
+            super()
+            Object.defineProperty(this, 'canBeAnything', { enumerable: true, value: ''});
+          }
+        }
+
+        class ThisError extends SuperError {
+          message;
+
+          constructor() {
+            super();
+            this.message = "This must not be empty";
+          }
+        }
+
+        it('.info(new Error()) uses Error instance as info', function (done) {
+          const err = new Error('test');
+          const logger = winston.createLogger(function (info) {
+            assume(info).instanceOf(Error);
+            assume(info).equals(err);
+            done();
+          });
+
+          logger.info(err);
+        });
+
+        it('should do the thing.', function () {
+          const expectedOutput = [];
+
+          const logger1 = winston.createLogger({
+            defaultMeta: {service: 'database-service'},
+            transports: [mockTransports.inMemory(levelOutput)]
+          });
+          const logger2 = winston.createLogger({
+            defaultMeta: {service: 'database-service'},
+            transports: [
+              new winston.transports.Console({
+                level: 'info',
+              }),
+              mockTransports.inMemory(logOutput)
+            ]
+          });
+
+          // const log = createLogger({
+          //   level: 'info',
+          //   defaultMeta: {service: 'database-service'},
+          //   transports: [
+          //     new transports.Console({
+          //       format: json(),
+          //       level: 'info',
+          //     }),
+          //   ]
+          // });
+
+          logger1.info(new SuperError());
+          logger1.info(new ThisError());
+          logger2.log('info', new SuperError());
+          logger2.log('info', new ThisError());
+          assume(levelOutput).equals(logOutput);
+          assume(expectedOutput).equals(levelOutput);
+          assume(expectedOutput).equals(logOutput);
+        });
       });
     });
   });
