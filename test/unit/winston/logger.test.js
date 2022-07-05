@@ -819,8 +819,8 @@ the log message provided.\nThis behavior needs to be verified if it's intentiona
 
       describe('Error objects', function () {
         class SuperError extends Error {
-          constructor() {
-            super()
+          constructor(msg) {
+            super(msg)
             Object.defineProperty(this, 'canBeAnything', { enumerable: true, value: ''});
           }
         }
@@ -849,11 +849,15 @@ the log message provided.\nThis behavior needs to be verified if it's intentiona
           const expectedOutput = [];
 
           const logger1 = winston.createLogger({
-            defaultMeta: {service: 'database-service'},
-            transports: [mockTransports.inMemory(levelOutput)]
+            defaultMeta: {logger: 'logger-1'},
+            transports: [
+              new winston.transports.Console({
+                level: 'info',
+              }),
+              mockTransports.inMemory(levelOutput)]
           });
           const logger2 = winston.createLogger({
-            defaultMeta: {service: 'database-service'},
+            defaultMeta: {logger: 'logger-2'},
             transports: [
               new winston.transports.Console({
                 level: 'info',
@@ -873,7 +877,7 @@ the log message provided.\nThis behavior needs to be verified if it's intentiona
           //   ]
           // });
 
-          logger1.info(new SuperError());
+          logger1.info(new SuperError("something"));
           logger1.info(new ThisError());
           logger2.log('info', new SuperError());
           logger2.log('info', new ThisError());
