@@ -866,20 +866,28 @@ the log message provided.\nThis behavior needs to be verified if it's intentiona
             ]
           });
 
-          // const log = createLogger({
-          //   level: 'info',
-          //   defaultMeta: {service: 'database-service'},
-          //   transports: [
-          //     new transports.Console({
-          //       format: json(),
-          //       level: 'info',
-          //     }),
-          //   ]
-          // });
+          const {createLogger, format, transports} = require('../../../lib/winston');
+          const ogLogger = createLogger({
+            level: 'info',
+            defaultMeta: {logger: 'logger-og'},
+            transports: [
+              new transports.Console({
+                format: format.json(),
+                level: 'info',
+              }),
+            ]
+          });
 
+          ogLogger.info(new Error("something"));
+          ogLogger.info(new SuperError("something"));
+          ogLogger.info(new ThisError());
+          console.log()
+          logger1.info(new Error("something"));
           logger1.info(new SuperError("something"));
           logger1.info(new ThisError());
-          logger2.log('info', new SuperError());
+          console.log()
+          logger2.info(new Error("something"));
+          logger2.info(new SuperError("something"));
           logger2.log('info', new ThisError());
           assume(levelOutput).equals(logOutput);
           assume(expectedOutput).equals(levelOutput);
