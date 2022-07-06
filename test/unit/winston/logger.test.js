@@ -857,7 +857,7 @@ the log message provided.\nThis behavior needs to be verified if it's intentiona
               mockTransports.inMemory(levelOutput)]
           });
           const logger2 = winston.createLogger({
-            defaultMeta: {logger: 'logger-2'},
+            defaultMeta: {logger: 'logger-1'},
             transports: [
               new winston.transports.Console({
                 level: 'info',
@@ -867,31 +867,35 @@ the log message provided.\nThis behavior needs to be verified if it's intentiona
           });
 
           const {createLogger, format, transports} = require('../../../lib/winston');
+          const ogOutput = []
           const ogLogger = createLogger({
             level: 'info',
-            defaultMeta: {logger: 'logger-og'},
+            defaultMeta: {logger: 'logger-1'},
             transports: [
               new transports.Console({
-                format: format.json(),
                 level: 'info',
               }),
+              mockTransports.inMemory(ogOutput)
             ]
           });
 
           ogLogger.info(new Error("something"));
-          ogLogger.info(new SuperError("something"));
-          ogLogger.info(new ThisError());
+          // ogLogger.info(new SuperError("something"));
+          // ogLogger.info(new ThisError());
           console.log()
           logger1.info(new Error("something"));
-          logger1.info(new SuperError("something"));
-          logger1.info(new ThisError());
+          // logger1.info(new SuperError("something"));
+          // logger1.info(new ThisError());
           console.log()
           logger2.info(new Error("something"));
-          logger2.info(new SuperError("something"));
-          logger2.log('info', new ThisError());
-          assume(levelOutput).equals(logOutput);
-          assume(expectedOutput).equals(levelOutput);
-          assume(expectedOutput).equals(logOutput);
+          // logger2.info(new SuperError("something"));
+          // logger2.log('info', new ThisError());
+          assume(ogOutput).eqls(logOutput);
+          assume(ogOutput).eqls(levelOutput);
+
+          assume(levelOutput).eqls(logOutput);
+          assume(expectedOutput).eqls(levelOutput);
+          assume(expectedOutput).eqls(logOutput);
         });
       });
     });
