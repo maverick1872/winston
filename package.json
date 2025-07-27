@@ -24,8 +24,8 @@
     "stream"
   ],
   "dependencies": {
-    "@dabh/diagnostics": "^2.0.2",
     "@colors/colors": "^1.6.0",
+    "@dabh/diagnostics": "^2.0.2",
     "async": "^3.2.3",
     "is-stream": "^2.0.0",
     "logform": "^2.7.0",
@@ -53,6 +53,7 @@
     "split2": "^4.1.0",
     "std-mocks": "^2.0.0",
     "through2": "^4.0.2",
+    "tinybench": "^4.0.1",
     "winston-compat": "^0.1.5"
   },
   "main": "./lib/winston.js",
