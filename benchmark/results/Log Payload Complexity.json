@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Log Payload Complexity",
+    "date": "2025-07-27T05:10:08.692Z",
+    "results": [
+      {
+        "Task name": "Simple String",
+        "Latency avg (ns)": "494.04 ± 6.50%",
+        "Latency med (ns)": "333.00 ± 41.00",
+        "Throughput avg (ops/s)": "3128633 ± 0.02%",
+        "Throughput med (ops/s)": "3003003 ± 421655",
+        "Samples": 2024249
+      },
+      {
+        "Task name": "Simple Object",
+        "Latency avg (ns)": "618.88 ± 3.28%",
+        "Latency med (ns)": "459.00 ± 41.00",
+        "Throughput avg (ops/s)": "2127477 ± 0.02%",
+        "Throughput med (ops/s)": "2178649 ± 178649",
+        "Samples": 1615813
+      },
+      {
+        "Task name": "Array Data",
+        "Latency avg (ns)": "721.48 ± 3.50%",
+        "Latency med (ns)": "542.00 ± 41.00",
+        "Throughput avg (ops/s)": "1816782 ± 0.02%",
+        "Throughput med (ops/s)": "1845018 ± 129753",
+        "Samples": 1386037
+      },
+      {
+        "Task name": "Deeply Nested Object",
+        "Latency avg (ns)": "1162.3 ± 2.89%",
+        "Latency med (ns)": "916.00 ± 42.00",
+        "Throughput avg (ops/s)": "1092105 ± 0.02%",
+        "Throughput med (ops/s)": "1091703 ± 51154",
+        "Samples": 860397
+      },
+      {
+        "Task name": "Large Payload (5KB)",
+        "Latency avg (ns)": "76197 ± 2.54%",
+        "Latency med (ns)": "68417 ± 2166.0",
+        "Throughput avg (ops/s)": "14248 ± 0.17%",
+        "Throughput med (ops/s)": "14616 ± 469",
+        "Samples": 13124
+      },
+      {
+        "Task name": "Error Object",
+        "Latency avg (ns)": "358.35 ± 4.10%",
+        "Latency med (ns)": "250.00 ± 41.00",
+        "Throughput avg (ops/s)": "4306768 ± 0.02%",
+        "Throughput med (ops/s)": "4000000 ± 575342",
+        "Samples": 2790546
+      },
+      {
+        "Task name": "Error Object with message",
+        "Latency avg (ns)": "1700.6 ± 4.05%",
+        "Latency med (ns)": "1416.0 ± 83.00",
+        "Throughput avg (ops/s)": "706554 ± 0.02%",
+        "Throughput med (ops/s)": "706215 ± 43410",
+        "Samples": 588017
+      },
+      {
+        "Task name": "Object with Circular Reference",
+        "Latency avg (ns)": "1426.5 ± 3.10%",
+        "Latency med (ns)": "1208.0 ± 42.00",
+        "Throughput avg (ops/s)": "859039 ± 0.02%",
+        "Throughput med (ops/s)": "827815 ± 29083",
+        "Samples": 701033
+      },
+      {
+        "Task name": "Object with Function Property",
+        "Latency avg (ns)": "834.55 ± 20.41%",
+        "Latency med (ns)": "250.00 ± 0.00",
+        "Throughput avg (ops/s)": "3795958 ± 0.03%",
+        "Throughput med (ops/s)": "4000000 ± 0",
+        "Samples": 1224912
+      },
+      {
+        "Task name": "Complex Mixed Data",
+        "Latency avg (ns)": "3172.5 ± 3.48%",
+        "Latency med (ns)": "2625.0 ± 83.00",
+        "Throughput avg (ops/s)": "392324 ± 0.03%",
+        "Throughput med (ops/s)": "380952 ± 11676",
+        "Samples": 315214
+      }
+    ],
+    "system": {
+      "platform": "darwin",
+      "arch": "arm64",
+      "version": "v20.18.3"
+    }
+  }
+]
