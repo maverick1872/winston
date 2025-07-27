@@ -1,7 +1,7 @@
 'use strict';
 import { Bench } from 'tinybench';
 import * as winston from '../../lib/winston.js';
-
+import { saveBenchmarkResults } from './utils.mjs';
 
 // Function to create a logger with n transports
 function createLoggerWithTransports(n) {
@@ -29,4 +29,9 @@ console.log(`Testing transport counts: ${numTransports.join(', ')}`);
 await bench.run();
 
 console.table(bench.table());
+
+// Save results to a file if requested
+if (process.argv.includes('--save')) {
+  saveBenchmarkResults(bench);
+}
 

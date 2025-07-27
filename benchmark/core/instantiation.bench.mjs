@@ -1,8 +1,9 @@
 'use strict';
 import { Bench } from 'tinybench';
 import * as winston from '../../lib/winston.js';
+import { saveBenchmarkResults } from './utils.mjs';
 
-const bench = new Bench({ name: 'Logger Instantiation' })
+const bench = new Bench({ name: 'Logger Instantiation' });
 
 bench
   .add('No Arguments', () => {
@@ -30,4 +31,9 @@ console.log(`Running ${bench.name} benchmark...`)
 await bench.run()
 
 console.table(bench.table())
+
+// Save results to a file if requested
+if (process.argv.includes('--save')) {
+  saveBenchmarkResults(bench);
+}
 

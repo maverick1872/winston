@@ -1,5 +1,6 @@
 import { Bench } from 'tinybench';
 import * as winston from '../lib/winston.js';
+import { saveBenchmarkResults } from './utils.mjs';
 
 // Define a consistent sample log data
 const sampleLogData = {
@@ -27,11 +28,11 @@ const formats = {
   'json': winston.format.json(),
   'printf ([LEVEL]: message)': winston.format.printf(info => `[${info.level}]: ${info.message}`),
   'logstash': winston.format.logstash(),
-  'simple + timestamp + simple': winston.format.combine(
+  'simple + timestamp': winston.format.combine(
     winston.format.timestamp(),
     winston.format.simple()
   ),
-  'simple + padLevels + simple': winston.format.combine(
+  'simple + padLevels': winston.format.combine(
     winston.format.padLevels(),
     winston.format.simple()
   ),
@@ -69,5 +70,11 @@ console.log(`Running ${bench.name} benchmark...`);
 
 await bench.run();
 
+// Display results in the console
 console.table(bench.table());
+
+// Save results to a file if requested
+if (process.argv.includes('--save')) {
+  saveBenchmarkResults(bench);
+}
 

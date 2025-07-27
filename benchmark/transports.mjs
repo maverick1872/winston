@@ -3,6 +3,7 @@ import * as winston from '../lib/winston.js';
 import os from 'os';
 import fs from 'fs';
 import path from 'path';
+import { saveBenchmarkResults } from './utils.mjs';
 
 // Helper function to get temp log file path
 function getTempLogFile(prefix) {
@@ -63,11 +64,9 @@ await bench.run();
 
 console.table(bench.table());
 
-// This will run once after the benchmarks
-// const tempDir = os.tmpdir();
-// fs.readdirSync(tempDir)
-//   .filter(file => file.startsWith('winston-benchmark-'))
-//   .forEach(file => {
-//     cleanup(path.join(tempDir, file));
-//   });
-//
+// Save results to a file if requested
+if (process.argv.includes('--save')) {
+  saveBenchmarkResults(bench);
+}
+
+

@@ -1,13 +1,14 @@
 'use strict';
 import { Bench } from 'tinybench';
 import * as winston from '../../lib/winston.js';
+import { saveBenchmarkResults } from './utils.mjs';
 
 const logger = winston.createLogger({
   transports: [new winston.transports.Console({ silent: true })]
 });
 const childLogger = logger.child({ module: 'test' });
 
-const bench = new Bench({ name: 'Winston Logger - Child Loggers' })
+const bench = new Bench({ name: 'Winston Logger - Child Loggers' });
 
 bench
   .add('Parent Logger', () => {
@@ -17,9 +18,14 @@ bench
     childLogger.info('Child logger message');
   });
 
-console.log(`Running ${bench.name} benchmark...`)
+console.log(`Running ${bench.name} benchmark...`);
 
-await bench.run()
+await bench.run();
 
-console.table(bench.table())
+console.table(bench.table());
+
+// Save results to a file if requested
+if (process.argv.includes('--save')) {
+  saveBenchmarkResults(bench);
+}
 
